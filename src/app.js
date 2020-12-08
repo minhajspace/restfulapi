@@ -18,7 +18,11 @@ app.get('/',(req,res)=>{
 app.post('/students', (req, res) => {
     console.log(req.body)
     const user = new student(req.body)
-    res.send("hello this is home page ")
+    user.save().then(()=>{
+        res.status(201).send(user)
+    }).catch((e)=>{
+     user.status(400).send(e)
+    })
 })
 
 
