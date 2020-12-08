@@ -5,6 +5,10 @@ const portNumber = process.env.PORT  || 4000 ;
 // requiring datebase connection file 
 
 require('./db/connection')
+
+// requiring student scheam 
+
+const student = require('./models/students')
 // create a new studnets 
 
 
