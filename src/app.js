@@ -25,6 +25,15 @@ app.post('/students', (req, res) => {
     })
 })
 
+app.get('/students',async (req,res)=>{
+    try{
+        const saveStudentData = await  student.find()
+        res.send(saveStudentData);
+    } catch(e) {
+       res.send(e)
+    }
+})
+
 
 app.listen(portNumber,()=>{
     console.log(`connection is on portnumber ${portNumber}`)
