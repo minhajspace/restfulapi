@@ -21,13 +21,14 @@ app.post('/students', (req, res) => {
     user.save().then(()=>{
         res.status(201).send(user)
     }).catch((e)=>{
-     user.status(400).send(e)
+     res.status(400).send(e)
     })
 })
 
 app.get('/students',async (req,res)=>{
     try{
         const saveStudentData = await  student.find()
+        
         res.send(saveStudentData);
     } catch(e) {
        res.send(e)
@@ -38,6 +39,7 @@ app.get('/students/:id',async (req,res)=>{
     try{
     const _id =req.params.id ;
     const indiviualStudentData = await student.findById(_id)
+    console.log(indiviualStudentData)
    
     if(!indiviualStudentData){
        return res.status(500).send()
@@ -46,7 +48,34 @@ app.get('/students/:id',async (req,res)=>{
     }
     }
     catch(e){
-        res.status(404).send(e)
+        res.status(500).send(e)
+    }
+})
+
+app.get('/students/:name', async (req,res)=>{
+    try{
+      const name = req.params.name
+        const StudentDataByName = await student.findOne({name:name}).exec()
+      console.log(StudentDataByName)
+      if(!StudentDataByName){
+         return res.status(404).send()
+      }else {
+          return res.status(200).send(StudentDataByName)
+      }
+    }catch(e){
+     res.send(e)
+    }
+} )
+
+app.patch('/students/:id', async (req,res)=>{
+    try{
+       const _id =req.params.id;
+       const studentUpdate = await student.findByIdAndUpdate(_id,req.body,{
+           new:true
+       })
+       res.status(200).send(studentUpdate)
+    } catch(e){
+       res.status(404).send(e)
     }
 })
 
