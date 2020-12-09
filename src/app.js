@@ -55,7 +55,7 @@ app.get('/students/:id',async (req,res)=>{
 app.get('/students/:name', async (req,res)=>{
     try{
       const name = req.params.name
-        const StudentDataByName = await student.findOne({name:name}).exec()
+        const StudentDataByName = await student.find(name).exec()
       console.log(StudentDataByName)
       if(!StudentDataByName){
          return res.status(404).send()
@@ -78,6 +78,16 @@ app.patch('/students/:id', async (req,res)=>{
        res.status(404).send(e)
     }
 })
+
+app.delete('/students/:id', async(req,res)=>{
+    try{
+      const _id = req.params.id
+      const deleteRecord = await student.findByIdAndDelete(_id)
+      res.status(200).send(deleteRecord)
+    }catch(e){
+      res.status(404).send(e)
+    }
+} )
 
 
 app.listen(portNumber,()=>{
