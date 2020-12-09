@@ -34,6 +34,22 @@ app.get('/students',async (req,res)=>{
     }
 })
 
+app.get('/students/:id',async (req,res)=>{
+    try{
+    const _id =req.params.id ;
+    const indiviualStudentData = await student.findById(_id)
+   
+    if(!indiviualStudentData){
+       return res.status(500).send()
+    } else {
+      return res.status(200).send(indiviualStudentData)
+    }
+    }
+    catch(e){
+        res.status(404).send(e)
+    }
+})
+
 
 app.listen(portNumber,()=>{
     console.log(`connection is on portnumber ${portNumber}`)
