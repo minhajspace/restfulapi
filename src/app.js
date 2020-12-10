@@ -52,20 +52,15 @@ app.get('/students/:id',async (req,res)=>{
     }
 })
 
-app.get('/students/:name', async (req,res)=>{
+app.get('/students/:name',async (req,res)=>{
     try{
-      const name = req.params.name
-        const StudentDataByName = await student.find(name).exec()
-      console.log(StudentDataByName)
-      if(!StudentDataByName){
-         return res.status(404).send()
-      }else {
-          return res.status(200).send(StudentDataByName)
-      }
+     const name = req.params.name;
+     const studentData = await student.find(name)
+     res.status(202).send(studentData)
     }catch(e){
-     res.send(e)
+    res.status(404).send(e)
     }
-} )
+})
 
 app.patch('/students/:id', async (req,res)=>{
     try{
